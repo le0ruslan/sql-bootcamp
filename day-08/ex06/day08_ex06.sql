@@ -1,0 +1,32 @@
+-- s1
+SET SESSION CHARACTERISTICS AS TRANSACTION ISOLATION LEVEL REPEATABLE READ;
+
+-- s2
+SET SESSION CHARACTERISTICS AS TRANSACTION ISOLATION LEVEL REPEATABLE READ;
+
+-- s1
+BEGIN;
+
+-- s2
+BEGIN;
+
+-- s1
+SELECT SUM(rating) FROM pizzeria;
+
+-- s2
+INSERT INTO pizzeria (id, name, rating) VALUES (11, 'Kazan Pizza 2', 4);
+
+-- s2
+COMMIT;
+
+-- s1
+SELECT SUM(rating) FROM pizzeria;
+
+-- s1
+COMMIT;
+
+-- s1
+SELECT SUM(rating) FROM pizzeria;
+
+-- s2
+SELECT SUM(rating) FROM pizzeria;
